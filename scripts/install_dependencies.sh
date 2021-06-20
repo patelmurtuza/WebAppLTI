@@ -1,4 +1,4 @@
 source /home/ec2-user/.bash_profile
 pwd
-cd web-client
+cd /home/ec2-user/WebAppLTI/web-client
 npm install
