@@ -1,0 +1,22 @@
+.App {
+  width: 100v2;
+  height: 100vh;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* this class will be toggled */
+.dark-mode {
+  filter: invert(87%);
+}
+
+/* html[theme="dark-mode"] {
+  filter: invert(50%);
+} */
+
+html[theme="dark-mode"] {
+  filter: invert(1) hue-rotate(180deg);
+}
