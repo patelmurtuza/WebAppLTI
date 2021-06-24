@@ -4,7 +4,11 @@ pipeline {
         stage('Deploy to development') { 
             steps {
                 sh 'echo "Add build steps here"'
-                step([$class: 'AWSCodeDeployPublisher', applicationName: 'Jenkins', awsAccessKey: 'AKIA5JJN2Z2EL43ZEBBC', awsSecretKey: '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', credentials: 'awsAccessKey', deploymentConfig: 'CodeDeployDefault.AllAtOnce', deploymentGroupAppspec: false, deploymentGroupName: 'development', deploymentMethod: 'deploy', excludes: '', iamRoleArn: '', includes: '**', pollingFreqSec: 15, pollingTimeoutSec: 300, proxyHost: '', proxyPort: 0, region: 'ap-south-1', s3bucket: 's3appbucketforjenkins', s3prefix: '', subdirectory: '', versionFileName: '', waitForCompletion: true])
+                sh 'cd web-client'
+                sh 'npm run-script build'
+                withAWS(region:'ap-south-1', credentials:'awsIAM') {
+                    s3Upload(bucket: 'forstaticwebhosting', path:'build/')
+                }
             }
         }
         stage('Deploy to production') {
