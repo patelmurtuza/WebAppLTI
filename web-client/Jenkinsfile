@@ -8,7 +8,7 @@ pipeline {
                 sh 'cd web-client && npm install'
                 sh 'cd web-client && npm run build'
                 withAWS(region:'ap-south-1', credentials:'awsIAM') {
-                    s3Upload(bucket: 'forstaticwebhosting', path:'web-client/build/')
+                    s3Upload(bucket: 'forstaticwebhosting', file:'web-client/build/')
                 }
             }
         }
@@ -32,10 +32,10 @@ pipeline {
             }
         }
     }
-    post {
-    // Clean after build
-        always {
-            cleanWs()
-        }
-    }
+    // post {
+    // // Clean after build
+    //     always {
+    //         cleanWs()
+    //     }
+    // }
 }
