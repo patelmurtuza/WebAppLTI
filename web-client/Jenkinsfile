@@ -5,9 +5,10 @@ pipeline {
         stage('Deploy to development') { 
             steps {
                 sh 'echo "Add build steps here"'
+                sh 'cd web-client && npm install'
                 sh 'cd web-client && npm run-script build'
                 withAWS(region:'ap-south-1', credentials:'awsIAM') {
-                    s3Upload(bucket: 'forstaticwebhosting', path:'build/')
+                    s3Upload(bucket: 'forstaticwebhosting', path:'web-client/build/')
                 }
             }
         }
