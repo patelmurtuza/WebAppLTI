@@ -8,7 +8,7 @@ pipeline {
                 sh 'cd web-client && npm install'
                 sh 'cd web-client && npm run build'
                 withAWS(region:'ap-south-1', credentials:'awsIAM') {
-                    s3Upload(bucket: 'forstaticwebhosting', file:'web-client/build/')
+                    s3Upload(bucket: 'reactjsdeployment', file:'web-client/build/')
                 }
                 emailext attachLog: true, body: 'Proceed or abort the deployment process at $RUN_DISPLAY_URL.', recipientProviders: [developers()], subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - Permission required for deploying to production.'
             }
