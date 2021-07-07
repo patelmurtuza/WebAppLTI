@@ -34,7 +34,7 @@ pipeline {
 //                     sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/vineetb95/TryAtJenkins' )
 //                 }
 //             }
-        }
+//       }
     }
     // post {
     // // Clean after build
