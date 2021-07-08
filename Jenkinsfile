@@ -1,5 +1,6 @@
 pipeline {
     agent any
+    tools {nodejs "nodeLatest"}
     stages {
         stage('Deploy to development') { 
             steps {
