@@ -25,21 +25,21 @@ pipeline {
                 emailext attachLog: true, body: 'We have successfully deployed to production, you can review the build console from the attached file. $RUN_DISPLAY_URL.', to : 'patelmurtuzas@gmail.com; vineet.bakshi@gmail.com', recipientProviders: [developers()], subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - Permission required for deploying to production.'
             }
         }
-//         stage("Commit changes back to production repo"){
-//             steps{
-//                 sh 'git checkout --track origin/dev'
-//                 sh 'git checkout --track origin/master'
-//                 sh 'git merge dev'
-//                 withCredentials([usernamePassword(credentialsId: '3abcc784-22bb-4e05-b6a8-b230ae6fbbf9', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-//                     sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/vineetb95/TryAtJenkins' )
-//                 }
-//             }
-//       }
+        stage("Commit changes back to production repo"){
+            steps{
+                sh 'git checkout --track origin/dev'
+                sh 'git checkout --track origin/master'
+                sh 'git merge dev'
+                withCredentials([usernamePassword(credentialsId: 'githubId', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                    sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/patelmurtuza/WebAppLTI' )
+                }
+            }
+      }
     }
-    // post {
-    // // Clean after build
-    //     always {
-    //         cleanWs()
-    //     }
-    // }
+    post {
+    // Clean after build
+        always {
+            cleanWs()
+        }
+    }
 }
