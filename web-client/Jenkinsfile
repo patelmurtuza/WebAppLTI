@@ -16,7 +16,7 @@ pipeline {
         }
         stage('Deploy to production') {
             input{
-              message 'Do you want to proceed ??'
+              message 'Do you want to proceed the build to the next stage ??'
             }
             steps {
                 sh 'echo "production build started"'
@@ -40,6 +40,9 @@ pipeline {
       }
     }
     post {
+        aborted {
+            sh 'echo  "Do something here whichc need to be executed if build is aborted"'
+        }
     // Clean after build
         always {
             cleanWs()
