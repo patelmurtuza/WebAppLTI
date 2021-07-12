@@ -35,12 +35,12 @@ pipeline {
                     s3Download bucket: 'elasticbeanstalk-ap-south-1-176983216772', file:'devops_api/dev_builds/'
                 }
                 step([$class: 'AWSEBDeploymentBuilder',
-                    credentialId: 'IAMuserLTI',
+                    credentialId: 'awsIAM',
                     awsRegion: 'ap-south-1',
                     maxAttempts: 30,
-                    applicationName: 'dotnetserverdev',
-                    environmentName: 'Dotnetserverdev-env',
-                    rootObject: 'devops_api/dev_builds/null/dotnetserverdev-${BUILD_NUMBER}-${BUILD_TAG}.zip',
+                    applicationName: 'MicroservicePOC',
+                    environmentName: 'Microservicepoc-env',
+                    rootObject: 'devops_api/dev_builds/null/MicroservicePOC-${BUILD_NUMBER}-${BUILD_TAG}.zip',
                     versionLabelFormat: '${BUILD_NUMBER}-${BUILD_TAG}-prod',
                     sleepTime: 90,
                     checkHealth: true
