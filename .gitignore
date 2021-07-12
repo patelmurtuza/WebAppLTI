@@ -1,2 +1,57 @@
 #ignore node modules
 web-client/node_modules
+
+#git ignore for angular client
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+web-client-angular/dist
+web-client-angular/tmp
+web-client-angular/out-tsc
+# Only exists if Bazel was run
+web-client-angular/bazel-out
+
+# dependencies
+web-client-angular/node_modules
+
+# profiling files
+web-client-angular/chrome-profiler-events*.json
+web-client-angular/speed-measure-plugin*.json
+
+# IDEs and editors
+web-client-angular/.idea
+web-client-angular/.project
+web-client-angular/.classpath
+web-client-angular/.c9/
+web-client-angular/*.launch
+web-client-angular/.settings/
+web-client-angular/*.sublime-workspace
+
+# IDE - VSCode
+web-client-angular/.vscode/*
+web-client-angular/!.vscode/settings.json
+web-client-angular/!.vscode/tasks.json
+web-client-angular/!.vscode/launch.json
+web-client-angular/!.vscode/extensions.json
+web-client-angular/.history/*
+
+# misc
+web-client-angular/.sass-cache
+web-client-angular/connect.lock
+web-client-angular/coverage
+web-client-angular/libpeerconnection.log
+web-client-angular/npm-debug.log
+web-client-angular/yarn-error.log
+web-client-angular/testem.log
+web-client-angular/typings
+
+# System Files
+web-client-angular/.DS_Store
+web-client-angular/Thumbs.db
+
+# devops_api stuff
+devops_api/bin
+devops_api/obj
+devops_api/site.zip
+devops_api/deploymentpackage.zip
+devops_api/dev_builds
