@@ -5,30 +5,33 @@ pipeline {
         stage('Deploy to development') { 
             steps {
                 sh 'echo "Add build steps here"'
+                sh 'git checkout dev'
                 sh 'cd web-client && npm install'
                 sh 'cd web-client && npm run build'
                 withAWS(region:'ap-south-1', credentials:'awsIAM') {
-                    s3Upload(bucket: 'reactjsdeployment', file:'web-client/build/')
+                    s3Upload(bucket: 'reactjsdev', file:'web-client/build/')
                 }
                 emailext attachLog: true, body: 'Proceed or abort the deployment process at $RUN_DISPLAY_URL.', to : 'patelmurtuzas@gmail.com; vineet.bakshi@gmail.com', recipientProviders: [developers()], subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - Permission required for deploying to production.'
             }
         }
         stage('Deploy to production') {
             input{
-              message 'Do you want to proceed ??'
+              message 'Do you want to proceed the build to the next stage ??'
             }
             steps {
                 sh 'echo "production build started"'
-                withAWS(region:'ap-south-1', credentials:'awsIAM') {
-                    s3Upload(bucket: 'reactjsprod', file:'web-client/build/')
+                 withAWS(region:'ap-south-1', credentials:'awsIAM') {
+                    s3Download bucket: 'reactjsdev', file:'web-client/build/', force: true
+                    s3Upload bucket: 'reactjsprod', file:'web-client/build/' 
                 }
                 emailext attachLog: true, body: 'We have successfully deployed to production, you can review the build console from the attached file. $RUN_DISPLAY_URL.', to : 'patelmurtuzas@gmail.com; vineet.bakshi@gmail.com', recipientProviders: [developers()], subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - Permission required for deploying to production.'
             }
         }
         stage("Commit changes back to production repo"){
             steps{
-                sh 'git checkout --track origin/dev'
+                // sh 'git checkout --track origin/dev'
                 sh 'git checkout --track origin/master'
+                sh 'git pull'
                 sh 'git merge dev'
                 withCredentials([usernamePassword(credentialsId: 'githubId', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                     sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/patelmurtuza/WebAppLTI' )
@@ -37,6 +40,9 @@ pipeline {
       }
     }
     post {
+        aborted {
+            sh 'echo  "Do something here whichc need to be executed if build is aborted"'
+        }
     // Clean after build
         always {
             cleanWs()
