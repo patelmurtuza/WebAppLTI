@@ -22,7 +22,7 @@ pipeline {
                 sh 'echo "production build started"'
                  withAWS(region:'ap-south-1', credentials:'awsIAM') {
                     s3Download bucket: 'reactjsdev', file:'web-client/build/', force: true
-                    s3Upload bucket: 'reactjdprod', file:'web-client/build/' 
+                    s3Upload bucket: 'reactjsprod', file:'web-client/build/' 
                 }
                 emailext attachLog: true, body: 'We have successfully deployed to production, you can review the build console from the attached file. $RUN_DISPLAY_URL.', to : 'patelmurtuzas@gmail.com; vineet.bakshi@gmail.com', recipientProviders: [developers()], subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - Permission required for deploying to production.'
             }
