@@ -1,0 +1,75 @@
+<app-header></app-header>
+
+<div class="table">
+    <h2 class="table__heading">Edit user</h2>
+
+    <div class="table__row table__row--header">
+        <div class="table__row__cell">First Name</div>
+        <div class="table__row__cell">Last Name</div>
+        <div class="table__row__cell">Email- ID</div>
+        <div class="table__row__cell">Brand name</div>
+        <div class="table__row__cell">Actions</div>
+    </div>
+
+    <div class="table__row">
+
+        <form class="form" #f="ngForm" (ngSubmit)="onSubmit(f.value)" novalidate>
+            <div class="table__row__cell">
+                <div>
+                    <input class='table__row__cell__field' #firstname="ngModel" ngModel type="text" name="firstname"
+                        [(ngModel)]='model.firstname' required />
+                    <span class='table__row__cell__field--error'
+                        *ngIf="firstname.invalid && (firstname.dirty || firstname.touched ||f.submitted)"
+                        tooltip="firstname is required" placement="bottom" show-delay="0">! </span>
+                </div>
+            </div>
+
+            <div class="table__row__cell">
+                <div>
+                    <input class='table__row__cell__field' #lastname="ngModel" ngModel type="text" name="lastname"
+                        [(ngModel)]='model.lastname' required />
+                    <span class='table__row__cell__field--error'
+                        *ngIf="lastname.invalid && (lastname.dirty || lastname.touched ||f.submitted)"
+                        tooltip="lastname is required" placement="bottom" show-delay="0">! </span>
+                </div>
+            </div>
+            <div class="table__row__cell">
+                <div>
+                    <input class='table__row__cell__field' #email="ngModel" ngModel type="email" name="email"
+                        [(ngModel)]='model.email' pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required />
+                    <span *ngIf="email.invalid && (email.dirty || email.touched ||f.submitted)">
+                        <span class='table__row__cell__field--error' *ngIf="email.errors?.required"
+                            tooltip="email is required" placement="bottom" show-delay="0">! </span>
+                        <span class='table__row__cell__field--error' *ngIf="email.errors?.pattern"
+                            tooltip="check your email" placement="bottom" show-delay="0">! </span>
+
+                    </span>
+                </div>
+            </div>
+            <div class="table__row__cell">
+                <div style="width: 100%;">
+                    <select class='table__row__cell__field' #brand="ngModel" ngModel name="brand"
+                        [(ngModel)]=model.brand required>
+                        <option *ngFor="let brand of brands" [value]="brand">
+                            {{brand}}
+                        </option>
+                    </select>
+                    <span class='table__row__cell__field--error' style="right: 2rem;"
+                        *ngIf="brand.invalid && (brand.dirty || brand.touched ||f.submitted)" tooltip="select a brand"
+                        placement="bottom" show-delay="0">! </span>
+
+                </div>
+
+
+            </div>
+
+            <div class="table__row__cell table__row__cell--action">
+                <button type="submit" [disabled]="!enableBtn" class="table__row__cell--actionbtn">Update</button>
+            </div>
+
+        </form>
+    </div>
+    <div class="table__row table__row--addbtn">
+        <button class="table__row__cell--actionbtn" (click)="gotoAdmin()">Go Back</button>
+    </div>
+</div>

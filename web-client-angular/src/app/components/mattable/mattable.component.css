@@ -1,0 +1,45 @@
+table
+{
+    width: 100%;
+    margin: 3rem auto;
+    border: 0.1rem solid #e2e2e2;
+}
+
+.table__wrapper
+{
+    margin-top: 3rem;
+    padding: 1rem;
+}
+th 
+{
+    font-size: 1.4rem;
+}
+
+.table__heading
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.userform
+{
+    margin-top: 2rem;
+    border-radius: 0.5rem;
+    padding: 1.5rem 2rem;
+    position: relative;
+}
+
+th.mat-header-cell, td.mat-cell, td.mat-footer-cell
+{
+    width: 15%;
+    text-align: center;
+}
+.mat-column-Actions > button
+{
+   margin: 0 1rem;
+}
+.table--footer
+{
+    padding: 2rem 0 4rem 0;
+}

@@ -1,0 +1,55 @@
+.table
+{
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem auto;
+    flex-direction: column;
+}
+
+.table__heading
+{
+    padding: 3rem 0;
+    font-size: 2.5rem;
+    font-weight: 500;
+}
+.table__row--header > div 
+{
+    justify-content: center;
+
+}
+
+.table__row 
+{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.table__row__cell
+{
+    padding: 1rem;
+    width: 20%;
+    font-size: 1.6rem;
+    border: 1px solid #f1f1f1;
+    height: 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.table__row__cell > div
+{
+    position: relative;
+    width: 90%;
+}
+
+
+.table__row--addbtn
+{
+
+    margin-top : 5rem;
+
+}

@@ -1,0 +1,78 @@
+<app-header></app-header>
+<div class="container table__wrapper">
+
+  <div class="table__heading--wrapper">
+    <div class="table__heading">
+      <h2>Users Information</h2>
+      <button mat-flat-button color="primary" (click)="handleAddNewUser()">Add User</button>
+    </div>
+
+    <div @fadeOut *ngIf="showAddUserForm" class="mat-elevation-z3 userform">
+      <h2>Create User</h2>
+      <app-adduser (newUserEvent)="addUser($event)"> </app-adduser>
+      <button (click) = "handleAddNewUser()">close</button>
+
+    </div>
+
+    <div @fade *ngIf="showEditUserForm" class="mat-elevation-z3 userform">
+      <h2>Update User</h2>
+      <app-update [User]=userToEdit (newUserEvent)="updateUser($event)"></app-update>
+      <button (click) = "handleEditUser()">close</button>
+
+    </div>
+
+  </div>
+
+  <div class="mat-elevation-z3">
+    <table mat-table [dataSource]="displayList" >
+      <!-- Position Column -->
+      <ng-container matColumnDef="First Name">
+        <th mat-header-cell *matHeaderCellDef> First Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.firstname}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="Last Name">
+        <th mat-header-cell *matHeaderCellDef> Last Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.lastname}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="Email ID">
+        <th mat-header-cell *matHeaderCellDef> Email ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="Brand">
+        <th mat-header-cell *matHeaderCellDef> Brand </th>
+        <td mat-cell *matCellDef="let element"> {{element.brand}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-flat-button color="primary" (click)="editUser(element)">Edit</button>
+          <button mat-flat-button color="primary" (click)="deleteUser(element.email)">Delete</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row @rowsAnimation *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-row  *ngIf = "delete">Want to delete?</tr>
+    </table>
+    <div class="table--footer" *ngIf="userList.length === 0">
+      <div style="text-align: center;">
+        No Records Found!
+      </div>
+    </div>
+
+    <mat-paginator 
+              [length]="userList.length"
+              [pageSize]="10"
+              [pageSizeOptions]="[5, 10, 25, 100]"
+              showFirstLastButtons
+              (page)="handlePagination($event)">
+    </mat-paginator>
+  </div>
+</div>
