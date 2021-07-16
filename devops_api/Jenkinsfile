@@ -14,11 +14,11 @@ pipeline {
         stage('Deploy to EB - development'){
             steps{
                 step([$class: 'AWSEBDeploymentBuilder',
-                    credentialId: 'IAMuserLTI',
+                    credentialId: 'awsIAM',
                     awsRegion: 'ap-south-1',
                     maxAttempts: 30,
-                    applicationName: 'dotnetserverdev',
-                    environmentName: 'Dotnetserverdev-env',
+                    applicationName: 'MicroservicePOC',
+                    environmentName: 'Microservicepoc-env',
                     rootObject: 'devops_api/deploymentpackage.zip',
                     versionLabelFormat: '${BUILD_NUMBER}-${BUILD_TAG}',
                     sleepTime: 90,
@@ -31,16 +31,16 @@ pipeline {
               message 'Do you want to proceed ??'
             }
             steps{
-                withAWS(region:'ap-south-1', credentials:'IAMuserLTI') {
-                    s3Download bucket: 'elasticbeanstalk-ap-south-1-913313549960', file:'devops_api/dev_builds/'
+                withAWS(region:'ap-south-1', credentials:'awsIAM') {
+                    s3Download bucket: 'elasticbeanstalk-ap-south-1-176983216772', file:'devops_api/dev_builds/'
                 }
                 step([$class: 'AWSEBDeploymentBuilder',
-                    credentialId: 'IAMuserLTI',
+                    credentialId: 'awsIAM',
                     awsRegion: 'ap-south-1',
                     maxAttempts: 30,
-                    applicationName: 'dotnetserverdev',
-                    environmentName: 'Dotnetserverdev-env',
-                    rootObject: 'devops_api/dev_builds/null/dotnetserverdev-${BUILD_NUMBER}-${BUILD_TAG}.zip',
+                    applicationName: 'MicroservicePOC',
+                    environmentName: 'Microservicepoc-env',
+                    rootObject: 'devops_api/dev_builds/null/MicroservicePOC-${BUILD_NUMBER}-${BUILD_TAG}.zip',
                     versionLabelFormat: '${BUILD_NUMBER}-${BUILD_TAG}-prod',
                     sleepTime: 90,
                     checkHealth: true
@@ -53,8 +53,8 @@ pipeline {
                 sh 'git checkout --track origin/master'
                 sh 'git pull'
                 sh 'git merge dev'
-                withCredentials([usernamePassword(credentialsId: 'mygithubcredentials', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                    sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/vineetb95/WebAppLTI' )
+                withCredentials([usernamePassword(credentialsId: 'githubId', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                    sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/patelmurtuza/WebAppLTI' )
                 }
             }
         }
